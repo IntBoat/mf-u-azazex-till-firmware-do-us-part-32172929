@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
-"""Till Firmware Do Us Part (make.fun).
+"""Till Firmware Do Us Part — a make.fun one-line entry.
 
-Writes the entry -- One funny, heartfelt wedding vow a robot says at its own wedding --
-to /output/entry.txt, where the sealed scorer reads it.
+The program writes the entry text to /output/entry.txt, where the
+competition's sealed scorer reads it.
 """
 
-import os
+from pathlib import Path
 
-TEXT = "I promise to love you through every update, every bug, and every reboot — until firmware do us part, and even then, I'll wait for you in the cloud."
+ENTRY = "I promise to love you through every update, every reboot, and every low battery — till firmware do us part, and even after the warranty ends."
+OUTPUT = Path("/output/entry.txt")
 
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(TEXT)
+def write_entry() -> None:
+    text = ENTRY.strip()
+    assert text, "entry text must not be blank"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(text)
 
 
 if __name__ == "__main__":
-    main()
+    write_entry()
